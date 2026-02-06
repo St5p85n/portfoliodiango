@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-4">
+                <form action="{% url 'modiferCat' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{cat.id}}">
+                    <label>Libelle : </label><input class="form-control" type="text" value="{{cat.libelle}}" name="libelle">
+                    <label>Description : </label><input class="form-control" type="text" value="{{cat.description}}" name="description">
+                    <button type="submit" class="btn btn-dark" style="margin-top: 10px">Modifier</button>
+                </form>
+            </div>
+    </div>
+  </div>
+{% endblock %}

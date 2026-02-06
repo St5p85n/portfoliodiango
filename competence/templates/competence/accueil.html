@@ -7,14 +7,40 @@
         <a href="{% url 'liste' %}">Aller sur la liste</a><br>
 
         <div class="row">
-            <div class="col-md-6">
-                {% for v in competences %}
-                    <p>{{v.nom}}</p>
-                {% endfor %}
+            <div class="col-md-4">
+                <form action="{% url 'ajoutCategorie' %}" method="post">
+                    {% csrf_token %}
+                    <label>Libelle : </label><input class="form-control" type="text" name="libelle">
+                    <label>Description : </label><input class="form-control" type="text" name="description">
+                    <button type="submit" class="btn btn-dark" style="margin-top: 10px">Enregistrer</button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Libelle</th>
+                            <th>Description</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         {% for c in cats %}
+                            <tr>
+                                <td>{{c.id}}</td>
+                                <td>{{c.libelle}}</td>
+                                <td>{{c.description}}</td>
+                                <td>
+                                    <a href="{% url 'supCategorie' c.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="{% url 'modifCategorie' c.id %}" class="btn btn-sm btn-primary">Update</a>
+                                </td>
+                            </tr>
+                         {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-
-
 {% endblock %}

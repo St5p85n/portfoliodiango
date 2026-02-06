@@ -1,5 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.context_processors import request
+
+from competence.models import Categorie
+
 
 # Create your views here.
 def index(request):
@@ -7,24 +11,30 @@ def index(request):
 
 def accueil(request):
     """ 1 - Debutant 2- Intermediaire - 3 Expert """
-    competences = [
-        {
-            'nom':'Django',
-            'description':'integration template',
-            'niveau':1,
-        },
-        {
-            'nom': 'JEE',
-            'description': 'Web services starter',
-            'niveau': 2,
-        },
-        {
-            'nom': 'BD',
-            'description': 'BD Relationnelle',
-            'niveau': 2,
-        }
-    ]
-    return render(request,'competence/accueil.html',{'competences':competences})
+    categories = Categorie.objects.all()
+    return render(request,'competence/accueil.html',{'cats':categories})
 
 def liste(request):
     return render(request,'competence/liste.html')
+
+def addCategorie(request):
+    if request.method == 'POST':
+        libelle = request.POST['libelle']
+        description = request.POST['description']
+        Categorie.objects.create(libelle=libelle,description=description)
+    return redirect("accueil")
+
+def deleteCategorie(request,id):
+    categorie = get_object_or_404(Categorie,id=id)
+    categorie.delete()
+    return redirect("accueil")
+def modifCategorie(request,id):
+    categorie = get_object_or_404(Categorie,id=id)
+    return render(request,'competence/update.html',{'cat':categorie})
+def updateCategorie(request):
+    if request.method == 'POST':
+        categorie = get_object_or_404(Categorie,id=request.POST['id'])
+        categorie.libelle = request.POST['libelle']
+        categorie.description = request.POST['description']
+        categorie.save()
+    return redirect("accueil")

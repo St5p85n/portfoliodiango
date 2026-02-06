@@ -22,4 +22,8 @@ urlpatterns = [
     path('accueil/',accueil,name='accueil'),
     path('admin/', admin.site.urls),
     path('liste/',liste,name='liste'),
+    path('supCategorie/<int:id>',deleteCategorie,name='supCategorie'),
+    path('modifCategorie/<int:id>',modifCategorie,name='modifCategorie'),
+    path('modiferCat/',updateCategorie,name='modiferCat'),
+    path("ajoutCategorie/",addCategorie,name="ajoutCategorie"),
 ]
