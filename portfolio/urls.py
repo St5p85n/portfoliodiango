@@ -15,8 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+import competence
 from competence.views import *
+from competence.viewsCompetence import *
 urlpatterns = [
     path('',index,name='index'),
     path('accueil/',accueil,name='accueil'),
@@ -26,4 +29,8 @@ urlpatterns = [
     path('modifCategorie/<int:id>',modifCategorie,name='modifCategorie'),
     path('modiferCat/',updateCategorie,name='modiferCat'),
     path("ajoutCategorie/",addCategorie,name="ajoutCategorie"),
+    path('competence/',accueilCompetence,name='competence'),
+    path('ajoutCompetence/',addCompetence,name='ajoutCompetence'),
+    path('profil/',include('profil.urls')),
+    path('api/',include('competence.urls')),
 ]

@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+             <div class="col-md-4">
+                 {% if user.is_authenticated %}
+                    <h1>Bien connecte</h1>
+                 {% endif %}
+               <a href="{% url 'logout' %}">deconnexion</a>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <label>Username : </label><input class="form-control" type="text" name="username">
+                    <label>Mot de pass : </label><input class="form-control" type="text" name="password">
+                    <button type="submit" class="btn btn-dark" style="margin-top: 10px">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
